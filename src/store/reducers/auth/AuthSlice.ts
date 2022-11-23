@@ -1,33 +1,16 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 import { HeadersDefaults } from 'axios';
-import { userState } from '../ts/type';
-import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
-import { auth, provider } from '../firebase';
+import { userState } from '../../../ts/type';
+import { UserAuth, UserLogout } from './ActionAuth';
+import { GoogleAuthProvider } from 'firebase/auth';
 
 interface CommonHeaderProperties extends HeadersDefaults {
   Authorization: string;
 }
 
-export const UserAuth = createAsyncThunk(
-    'auth/UserAuth',
-    async (params: any, { getState }: any) => {
-        const response = await signInWithPopup(auth, provider)
-        return {response, params}
-    }
-);
-export const UserLogout = createAsyncThunk(
-    'auth/UserLogout',
-    async (params: any, { getState }: any) => {
-        const response = await signOut(auth)
-        console.log(response);
-        
-        return {response, params}
-    }
-);
 
-
-const authSlice = createSlice({
+const AuthSlice = createSlice({
   name: 'auth',
   initialState: {
     // loading
@@ -72,6 +55,6 @@ const authSlice = createSlice({
   },
 });
 
-export default authSlice.reducer;
+export default AuthSlice.reducer;
 export const {
-} = authSlice.actions;
+} = AuthSlice.actions;

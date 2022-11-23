@@ -1,21 +1,21 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 import { HeadersDefaults } from 'axios';
-import { todoState } from '../ts/type';
+import { todoState } from '../../../ts/type';
 
 interface CommonHeaderProperties extends HeadersDefaults {
   Authorization: string;
 }
 
 export const getTaskDay = createAsyncThunk(
-  'task/getTaskDay',
+  'todo/getTaskDay',
   async (params: any, { getState }: any) => {
     console.log(params);
     // return { response };
   }
 );
-const taskSlice = createSlice({
-  name: 'task',
+const TodoSlice = createSlice({
+  name: 'todo',
   initialState: {
     // loading
     loading: false,
@@ -38,7 +38,7 @@ const taskSlice = createSlice({
   },
 });
 
-export default taskSlice.reducer;
+export default TodoSlice.reducer;
 export const {
   setCurrentVariantTable,
-} = taskSlice.actions;
+} = TodoSlice.actions;

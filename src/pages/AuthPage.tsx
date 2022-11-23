@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../hooks/redux'
 import Cookies from 'js-cookie';
-import { UserAuth, UserLogout } from '../store/authSlice'
 import { FcGoogle } from "react-icons/fc";
+import { UserAuth, UserLogout } from '../store/reducers/auth/ActionAuth';
 
 export const AuthPage = () => {
     const token = Cookies.get('token')
