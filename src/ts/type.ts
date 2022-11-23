@@ -1,3 +1,7 @@
 export type todoState = {
-    loading: boolean
+    loading: boolean,
+}
+export type userState = {
+    loading: boolean,
+    user: Object
 }
