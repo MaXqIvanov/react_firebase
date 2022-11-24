@@ -36,6 +36,23 @@
   border: 3px solid #b3e3fb;
   /* padding вокруг плашки */
 }
+.todo_wrapper::-webkit-scrollbar {
+  width: 4px;
+  /* ширина scrollbar */
+  height: 9px;
+}
+.todo_wrapper::-webkit-scrollbar-track {
+  background: #ffffff;
+  /* цвет дорожки */
+}
+.todo_wrapper::-webkit-scrollbar-thumb {
+  background-color: #b3e3fb;
+  /* цвет плашки */
+  border-radius: 20px;
+  /* закругления плашки */
+  border: 3px solid #ff41cf;
+  /* padding вокруг плашки */
+}
 .App {
   height: 100%;
   width: 100%;
@@ -139,6 +156,17 @@
   padding: 20px;
   box-sizing: border-box;
   min-height: calc(100vh - 50px);
+}
+.todo_wrapper {
+  overflow-y: auto;
+  max-height: calc(20vw - 30px);
+  width: 100%;
+  margin-right: -5px !important;
+}
+@media (min-width: 1500px) {
+  .todo_wrapper {
+    max-height: calc(17vw - 30px);
+  }
 }
 .todo {
   position: relative;
