@@ -170,7 +170,7 @@
   input{
     border: 0px;
     outline: 0px;
-    width: 90%;
+    width: 80%;
     color: @color-todo;
   }
   .delete_btn{
@@ -242,13 +242,14 @@
   cursor: pointer;
 }
 .todo__task{
+  position: relative;
   border-bottom: 1px solid @color-border;
   height: 30px;
   width: 100%;
   display: flex;
   align-items: center;
   &:first-child{
-    margin-top: 2px;
+    // padding-top: 2px;
   }
 
   input[type='checkbox']{
@@ -257,6 +258,20 @@
     margin-right: 10px;
     margin-left: 5px;
   }
+  .load_file{
+    display: none;
+    margin-top: -2px;
+    right: 16px;
+    height: 17px;
+    width: 17px;
+    font-size: 17px;
+    cursor: pointer;
+  }
+  &:hover{
+    .load_file{
+      display: flex;
+    }
+  }
 }
 .task__name{
   margin-left: 5px;
@@ -264,9 +279,11 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
+  font-size: small;
   .task__delete{
     display: none;
     cursor: pointer;
+    font-size: medium;
   }
   &:hover{
     .task__delete{
@@ -275,13 +292,24 @@
   }
 }
 .task__line{
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 24px;
+  background: @color-border;
+  height: 100%;
+  width: 1px;
+  box-sizing: border-box;
+}
+.task__line_2{
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 28px;
   background: @color-border;
   height: 100%;
   width: 1px;
 }
-.task__line_2{
-  margin-left: -4px;
-  background: @color-border;
-  height: 100%;
-  width: 1px;
+.upload_file{
+  cursor: pointer;
 }

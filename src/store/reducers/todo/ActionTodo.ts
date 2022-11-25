@@ -3,6 +3,7 @@ import { collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, updateDoc, 
 import { db } from '../../../firebase';
 import Cookies from 'js-cookie'
 import {v4} from 'uuid'
+import { getBlob, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 export const CreateTodo = createAsyncThunk(
     'todo/CreateTodo',
@@ -67,4 +68,39 @@ export const createTask = createAsyncThunk(
         return {response, params}
     }
 );
-// deleteTask
+// upload file
+export const uploadFile = createAsyncThunk(
+    'todo/uploadFile',
+    async (params: any, { getState }: any) => {
+        console.log(params);
+        console.log(getState().todo.current_todo);
+        
+        const washingtonRef = doc(db, "todos", getState().todo.current_todo.id);
+        const response2 = await updateDoc(washingtonRef, getState().todo.current_todo);
+        console.log(response2);
+        
+        const storage = getStorage();
+        const storageRef = ref(storage, getState().todo.current_todo.tasks[getState().todo.current_index_task].file);
+        const response = uploadBytes(storageRef, params.file)
+        console.log(response);
+        
+
+        return {response, params}
+    }
+);
+
+export const getFile = createAsyncThunk(
+    'todo/getFile',
+    async (params: any, { getState }: any) => {
+        const storage = getStorage();
+        const response = await getBlob(ref(storage, `gs://todo-ec422.appspot.com/${params.task.file}`))
+        const imageURL = URL.createObjectURL(response)
+        const link:any = document.createElement('a')
+        link.href = imageURL
+        link.download = `file.${response.type.split('/')[1]}`
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+    }
+);
+

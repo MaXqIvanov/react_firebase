@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import {SiSpringCreators} from 'react-icons/si'
 import {AiOutlinePlus} from 'react-icons/ai'
 import {RiDeleteBin6Line} from 'react-icons/ri'
+import {AiOutlineFileAdd} from 'react-icons/ai'
+import {BsFileArrowDownFill} from 'react-icons/bs'
 import { useAppDispatch } from '../hooks/redux'
-import { ChangeTodo, createTask, CreateTodo, DeleteTodo, GetTodo } from '../store/reducers/todo/ActionTodo'
+import { ChangeTodo, createTask, CreateTodo, DeleteTodo, getFile, GetTodo, uploadFile } from '../store/reducers/todo/ActionTodo'
 import { useSelector } from 'react-redux'
 import { RootState } from '../store'
 import { TTask, TTodo } from '../ts/type'
-import { addNewTask, changeCurrentTask, changeCurrentTodo, deleteTask, setCurrentTask, setCurrentTodo } from '../store/reducers/todo/TodoSlice'
+import { addNewTask, changeCurrentTask, changeCurrentTodo, deleteTask, setCurrentTask, setCurrentTodo, uploadTaskFile } from '../store/reducers/todo/TodoSlice'
 
 export const TodoPage = () => {
   const dispatch = useAppDispatch()
@@ -26,6 +28,23 @@ export const TodoPage = () => {
     }
 
   }
+
+  const [file, setFile] = useState<any>()
+  const handleCapture = ({ target }: any) => {
+    setFile(target.files[0]);
+    console.log(target.files[0]);
+    dispatch(uploadTaskFile(''))
+    dispatch(uploadFile({file: target.files[0]}))
+  };
+  // useEffect(() => {
+  //   if(file){
+  //     console.log(file)
+  //     dispatch(uploadFile({file}))
+  //   }
+    
+  // }, [file])
+  
+
   return (
     <div className='todos'>
       {todos?.length > 0 && todos.map((todo: TTodo, index: number)=>  <div onClick={()=> dispatch(setCurrentTodo({
@@ -76,6 +95,17 @@ export const TodoPage = () => {
                     dispatch(ChangeTodo(todo))
                   }} className='task__delete'><RiDeleteBin6Line /></div>
                 </div>
+                {
+                  task.file?.length > 1 ?
+                  <div onClick={()=> dispatch(getFile({task}))} className='upload_file'>
+                    <BsFileArrowDownFill />
+                  </div>
+                  :
+                  <label title='Загрузить изображение' htmlFor="load_file" className='load_file'>
+                    <AiOutlineFileAdd />
+                    <input onChange={handleCapture} type={'file'} id="load_file" name="file" style={{opacity: '0', maxHeight: '1px', maxWidth: '1px'}}/>
+                  </label>
+                }
               </div>)}
           </div>
           <div onClick={()=> dispatch(DeleteTodo(todo))} className='delete_btn'><RiDeleteBin6Line /></div>

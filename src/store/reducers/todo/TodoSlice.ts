@@ -46,6 +46,12 @@ const TodoSlice = createSlice({
       state.todos[action.payload.index].tasks.splice(action.payload.index_task, 1)
       state.current_todo = state.todos[action.payload.index]
     },
+    uploadTaskFile(state: todoState, action:any){
+      console.log(action.params);
+      const id_file = v4() + Math.floor(Math.random() * 94)
+      state.todos[state.current_index].tasks[state.current_index_task].file = id_file
+      state.current_todo = state.todos[state.current_index]
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(CreateTodo.pending, (state: todoState, action: PayloadAction) => {
@@ -114,5 +120,6 @@ export const {
   setCurrentTask,
   changeCurrentTask,
   addNewTask,
-  deleteTask
+  deleteTask,
+  uploadTaskFile
 } = TodoSlice.actions;
