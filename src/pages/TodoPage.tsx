@@ -7,7 +7,7 @@ import { ChangeTodo, createTask, CreateTodo, DeleteTodo, GetTodo } from '../stor
 import { useSelector } from 'react-redux'
 import { RootState } from '../store'
 import { TTask, TTodo } from '../ts/type'
-import { addNewTask, changeCurrentTask, changeCurrentTodo, setCurrentTask, setCurrentTodo } from '../store/reducers/todo/TodoSlice'
+import { addNewTask, changeCurrentTask, changeCurrentTodo, deleteTask, setCurrentTask, setCurrentTodo } from '../store/reducers/todo/TodoSlice'
 
 export const TodoPage = () => {
   const dispatch = useAppDispatch()
@@ -69,15 +69,15 @@ export const TodoPage = () => {
                 }} checked={task.complete} type={'checkbox'}/>
                 <div className='line task__line'></div>
                 <div className='line task__line_2'></div>
-                <div className='name task__name'><input style={{textDecoration: task.complete ? 'line-through' : 'none'}} onBlur={()=> dispatch(ChangeTodo(todo))} value={task.name} onChange={(e)=> dispatch(changeCurrentTask({name: e.target.value}))}/><div className='task__delete'><RiDeleteBin6Line /></div></div>
+                <div className='name task__name'>
+                  <input style={{textDecoration: task.complete ? 'line-through' : 'none'}} onBlur={()=> dispatch(ChangeTodo(todo))} value={task.name} onChange={(e)=> dispatch(changeCurrentTask({name: e.target.value}))}/>
+                  <div onClick={()=> {
+                    dispatch(deleteTask({index_task, index}))
+                    dispatch(ChangeTodo(todo))
+                  }} className='task__delete'><RiDeleteBin6Line /></div>
+                </div>
               </div>)}
           </div>
-          {/* <div className='task todo__task'>
-            <input type={'checkbox'}/>
-            <div className='line task__line'></div>
-            <div className='line task__line_2'></div>
-            <div className='name task__name'><input value={'Помыть посуду'} /><div className='task__delete'><RiDeleteBin6Line /></div></div>
-          </div> */}
           <div onClick={()=> dispatch(DeleteTodo(todo))} className='delete_btn'><RiDeleteBin6Line /></div>
       </div>)}
       <div className='todo todos__todo'>
@@ -104,3 +104,6 @@ export const TodoPage = () => {
     </div>
   )
 }
+
+// todo 1 Прикрепление файлов к записи
+// todo 2 Реализовать дату завершения записи

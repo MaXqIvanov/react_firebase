@@ -38,9 +38,14 @@ const TodoSlice = createSlice({
     },
     addNewTask(state: todoState, action:any){
       const id_task = v4() + Math.floor(Math.random() * 100)
-      state.current_todo.tasks = [...state.todos[action.payload.index].tasks, {id: id_task, name: '', complete: false}]
-      state.todos[action.payload.index].tasks = [...state.todos[action.payload.index].tasks, {id: id_task, name: '', complete: false}]
-    }
+      state.current_todo.tasks = [...state.todos[action.payload.index].tasks, {id: id_task, name: '', complete: false, file: ''}]
+      state.todos[action.payload.index].tasks = [...state.todos[action.payload.index].tasks, {id: id_task, name: '', complete: false, file: ''}]
+    },
+    deleteTask(state: todoState, action:any){
+      console.log(action.params);
+      state.todos[action.payload.index].tasks.splice(action.payload.index_task, 1)
+      state.current_todo = state.todos[action.payload.index]
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(CreateTodo.pending, (state: todoState, action: PayloadAction) => {
@@ -108,5 +113,6 @@ export const {
   changeCurrentTodo,
   setCurrentTask,
   changeCurrentTask,
-  addNewTask
+  addNewTask,
+  deleteTask
 } = TodoSlice.actions;

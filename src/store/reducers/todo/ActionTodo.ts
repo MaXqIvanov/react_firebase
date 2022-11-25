@@ -14,7 +14,8 @@ export const CreateTodo = createAsyncThunk(
         params.tasks = [{
             id: id_task,
             name: '',
-            complete: false
+            complete: false,
+            file: ''
         }]
         const response = await setDoc(doc(db, "todos", id), params);
         return {response, params}
@@ -66,3 +67,4 @@ export const createTask = createAsyncThunk(
         return {response, params}
     }
 );
+// deleteTask
