@@ -142,9 +142,21 @@
   max-height: calc(20vw - 30px);
   width: 100%;
   margin-right: -5px !important;
-
+  overflow-x: hidden;
   @media(min-width: 1500px){
     max-height: calc(17vw - 30px);
+  }
+  @media(max-width: 1200px){
+    max-height: calc(25vw - 30px);
+  }
+  @media(max-width: 1000px){
+    max-height: calc(30vw - 30px);
+  }
+  @media(max-width: 800px){
+    max-height: calc(50vw - 30px);
+  }
+  @media(max-width: 600px){
+    max-height: calc(100% - 30px);
   }
 }
 .todo{
@@ -166,11 +178,36 @@
     margin-left: 3.42%;
     margin-right: 3.42%;
   }
+  @media(max-width: 1200px){
+    height: 25vw;
+    width: 25%;
+    margin-left: 11.35%;
+    margin-right: 11.35%;
+  }
+  @media(max-width: 1000px){
+    height: 30vw;
+    width: 30%;
+    margin-left: 9%;
+    margin-right: 9%;
+  }
+  @media(max-width: 800px){
+    height: 50vw;
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 3vw;
+  }
+  @media(max-width: 600px){
+    height: 70vh;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
 
   input{
     border: 0px;
     outline: 0px;
-    width: 90%;
+    width: 80%;
     color: @color-todo;
   }
   .delete_btn{
@@ -220,12 +257,36 @@
   max-width: 100%;
   overflow: hidden;
   border-radius: 50px;
+  @media(max-width: 1200px){
+    top: -1vw;
+  }
+  @media(max-width: 800px){
+    top: -1.6vw;
+  }
+  @media(max-width: 600px){
+    top: -2.8vw;
+  }
 }
 .spring_img{
   font-size: 1.5vw;
   transform: rotate(245deg);
+  background-repeat:repeat-x;
   @media(max-width: 1500px){
     font-size: 1.6vw;
+  }
+  @media(max-width: 1200px){
+    font-size: 2vw;
+    margin-top: -2px;
+  }
+  @media(max-width: 800px){
+    font-size: 2.5vw;
+  }
+  @media(max-width: 600px){
+    font-size: 3.9vw;
+    margin-top: 3px;
+  }
+  @media(max-width: 500px){
+    font-size: 4vh;
   }
 }
 
@@ -242,13 +303,30 @@
   cursor: pointer;
 }
 .todo__task{
+  position: relative;
   border-bottom: 1px solid @color-border;
   height: 30px;
   width: 100%;
   display: flex;
   align-items: center;
+  .task__delete{
+    margin-top: 1px;
+    position: absolute;
+    top: 50%;
+    right: 32px;
+    transform: translate(-50%, -50%);
+    display: none;
+    cursor: pointer;
+    font-size: medium;
+    animation: alternate linear 0.15s hover_effect;
+  }
+  &:hover{
+    .task__delete{
+      display: block;
+    }
+  }
   &:first-child{
-    margin-top: 2px;
+    // padding-top: 2px;
   }
 
   input[type='checkbox']{
@@ -257,6 +335,23 @@
     margin-right: 10px;
     margin-left: 5px;
   }
+  .load_file{
+    display: none;
+    position: absolute;
+    top: 48%;
+    right: 14px;
+    transform: translate(-50%, -50%);
+    height: 17px;
+    width: 17px;
+    font-size: 17px;
+    cursor: pointer;
+    animation: alternate linear 0.15s hover_effect;
+  }
+  &:hover{
+    .load_file{
+      display: flex;
+    }
+  }
 }
 .task__name{
   margin-left: 5px;
@@ -264,24 +359,64 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  .task__delete{
-    display: none;
-    cursor: pointer;
-  }
-  &:hover{
-    .task__delete{
-      display: block;
-    }
-  }
+  font-size: small;
 }
 .task__line{
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 24px;
+  background: @color-border;
+  height: 100%;
+  width: 1px;
+  box-sizing: border-box;
+}
+.task__line_2{
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 28px;
   background: @color-border;
   height: 100%;
   width: 1px;
 }
-.task__line_2{
-  margin-left: -4px;
-  background: @color-border;
-  height: 100%;
-  width: 1px;
+.upload_file{
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  cursor: pointer;
+}
+.date_picker{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: fit-content; 
+    label{
+      display: none;
+    }
+    input{
+      display: none;
+    }
+    fieldset{
+      border: 0px;
+    }
+    .MuiSvgIcon-root{
+      color: @color-todo !important;
+      font-size: 18px;
+      margin-top: -2px;
+    }
+    .MuiButtonBase-root{
+      margin-right: 0px;
+      font-size: 15px !important;
+      padding: 0px;
+    }
+    .MuiInputAdornment-root{
+      padding-left: 0px;
+      margin-left: 0px;
+    }
+    @media(max-width: 800px){
+      right: -5px;
+    }
 }

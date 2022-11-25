@@ -19,5 +19,8 @@ export type TTodo = {
 export type TTask = {
     id: number,
     name: string,
-    complete: boolean
+    complete: boolean,
+    file: string,
+    file_name: string,
+    finish_date: any,
 }

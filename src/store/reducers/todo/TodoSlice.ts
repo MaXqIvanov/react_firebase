@@ -24,8 +24,11 @@ const TodoSlice = createSlice({
       state.current_todo = action.payload.todo
       state.current_index = action.payload.index
     },
-    setCurrentTask(state: todoState, action: {payload: {index: number}}) {
-      state.current_index_task = action.payload.index
+    setCurrentTask(state: todoState, action: {payload: {index: number, index_task: number}}) {
+      console.log(action.payload);
+      
+      state.current_index_task = action.payload.index_task
+      state.current_index = action.payload.index
     },
     changeCurrentTodo(state: todoState, action: any){
       const params = action.payload
@@ -38,8 +41,27 @@ const TodoSlice = createSlice({
     },
     addNewTask(state: todoState, action:any){
       const id_task = v4() + Math.floor(Math.random() * 100)
-      state.current_todo.tasks = [...state.todos[action.payload.index].tasks, {id: id_task, name: '', complete: false}]
-      state.todos[action.payload.index].tasks = [...state.todos[action.payload.index].tasks, {id: id_task, name: '', complete: false}]
+      state.current_todo.tasks = [...state.todos[action.payload.index].tasks, {id: id_task, name: '', complete: false, file: '', file_name: '', finish_date: ''}]
+      state.todos[action.payload.index].tasks = [...state.todos[action.payload.index].tasks, {id: id_task, name: '', complete: false, file: '', file_name: '', finish_date: ''}]
+    },
+    deleteTask(state: todoState, action:any){
+      console.log(action.params);
+      state.todos[action.payload.index].tasks.splice(action.payload.index_task, 1)
+      state.current_todo = state.todos[action.payload.index]
+    },
+    uploadTaskFile(state: todoState, action:any){
+      console.log(action.payload);
+      const id_file = v4() + Math.floor(Math.random() * 94)
+      state.todos[state.current_index].tasks[state.current_index_task].file = id_file
+      state.todos[state.current_index].tasks[state.current_index_task].file_name = action.payload.file.name
+      state.current_todo = state.todos[state.current_index]
+    },
+    changeDateTask(state: todoState, action:any){
+      console.log(action);
+      
+      state.todos[state.current_index].tasks[state.current_index_task].finish_date = ""+action.payload.date.$d
+      state.current_todo = state.todos[state.current_index]
+      
     }
   },
   extraReducers: (builder) => {
@@ -108,5 +130,8 @@ export const {
   changeCurrentTodo,
   setCurrentTask,
   changeCurrentTask,
-  addNewTask
+  addNewTask,
+  deleteTask,
+  uploadTaskFile,
+  changeDateTask
 } = TodoSlice.actions;
