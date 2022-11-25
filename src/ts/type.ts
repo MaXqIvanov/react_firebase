@@ -20,5 +20,7 @@ export type TTask = {
     id: number,
     name: string,
     complete: boolean,
-    file: string
+    file: string,
+    file_name: string,
+    finish_date: any,
 }

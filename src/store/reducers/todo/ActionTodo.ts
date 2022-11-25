@@ -16,7 +16,9 @@ export const CreateTodo = createAsyncThunk(
             id: id_task,
             name: '',
             complete: false,
-            file: ''
+            file: '',
+            file_name: '',
+            finish_date: '',
         }]
         const response = await setDoc(doc(db, "todos", id), params);
         return {response, params}
@@ -54,6 +56,8 @@ export const ChangeTodo = createAsyncThunk(
         const washingtonRef = doc(db, "todos", params.id);
         console.log(params);
         // Set the "capital" field of the city 'DC'
+        console.log(getState().todo.current_todo);
+        
         const response = await updateDoc(washingtonRef, getState().todo.current_todo);
         return {response, params}
     }
@@ -97,7 +101,7 @@ export const getFile = createAsyncThunk(
         const imageURL = URL.createObjectURL(response)
         const link:any = document.createElement('a')
         link.href = imageURL
-        link.download = `file.${response.type.split('/')[1]}`
+        link.download = `${params.task.file_name}`
         document.body.appendChild(link)
         link.click()
         document.body.removeChild(link)

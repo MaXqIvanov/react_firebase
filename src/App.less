@@ -142,9 +142,21 @@
   max-height: calc(20vw - 30px);
   width: 100%;
   margin-right: -5px !important;
-
+  overflow-x: hidden;
   @media(min-width: 1500px){
     max-height: calc(17vw - 30px);
+  }
+  @media(max-width: 1200px){
+    max-height: calc(25vw - 30px);
+  }
+  @media(max-width: 1000px){
+    max-height: calc(30vw - 30px);
+  }
+  @media(max-width: 800px){
+    max-height: calc(50vw - 30px);
+  }
+  @media(max-width: 600px){
+    max-height: calc(100% - 30px);
   }
 }
 .todo{
@@ -165,6 +177,31 @@
     width: 16%;
     margin-left: 3.42%;
     margin-right: 3.42%;
+  }
+  @media(max-width: 1200px){
+    height: 25vw;
+    width: 25%;
+    margin-left: 11.35%;
+    margin-right: 11.35%;
+  }
+  @media(max-width: 1000px){
+    height: 30vw;
+    width: 30%;
+    margin-left: 9%;
+    margin-right: 9%;
+  }
+  @media(max-width: 800px){
+    height: 50vw;
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 3vw;
+  }
+  @media(max-width: 600px){
+    height: 70vh;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
   }
 
   input{
@@ -220,12 +257,36 @@
   max-width: 100%;
   overflow: hidden;
   border-radius: 50px;
+  @media(max-width: 1200px){
+    top: -1vw;
+  }
+  @media(max-width: 800px){
+    top: -1.6vw;
+  }
+  @media(max-width: 600px){
+    top: -2.8vw;
+  }
 }
 .spring_img{
   font-size: 1.5vw;
   transform: rotate(245deg);
+  background-repeat:repeat-x;
   @media(max-width: 1500px){
     font-size: 1.6vw;
+  }
+  @media(max-width: 1200px){
+    font-size: 2vw;
+    margin-top: -2px;
+  }
+  @media(max-width: 800px){
+    font-size: 2.5vw;
+  }
+  @media(max-width: 600px){
+    font-size: 3.9vw;
+    margin-top: 3px;
+  }
+  @media(max-width: 500px){
+    font-size: 4vh;
   }
 }
 
@@ -248,6 +309,22 @@
   width: 100%;
   display: flex;
   align-items: center;
+  .task__delete{
+    margin-top: 1px;
+    position: absolute;
+    top: 50%;
+    right: 32px;
+    transform: translate(-50%, -50%);
+    display: none;
+    cursor: pointer;
+    font-size: medium;
+    animation: alternate linear 0.15s hover_effect;
+  }
+  &:hover{
+    .task__delete{
+      display: block;
+    }
+  }
   &:first-child{
     // padding-top: 2px;
   }
@@ -260,12 +337,15 @@
   }
   .load_file{
     display: none;
-    margin-top: -2px;
-    right: 16px;
+    position: absolute;
+    top: 48%;
+    right: 14px;
+    transform: translate(-50%, -50%);
     height: 17px;
     width: 17px;
     font-size: 17px;
     cursor: pointer;
+    animation: alternate linear 0.15s hover_effect;
   }
   &:hover{
     .load_file{
@@ -280,16 +360,6 @@
   justify-content: space-between;
   align-items: center;
   font-size: small;
-  .task__delete{
-    display: none;
-    cursor: pointer;
-    font-size: medium;
-  }
-  &:hover{
-    .task__delete{
-      display: block;
-    }
-  }
 }
 .task__line{
   position: absolute;
@@ -311,5 +381,42 @@
   width: 1px;
 }
 .upload_file{
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
   cursor: pointer;
+}
+.date_picker{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: fit-content; 
+    label{
+      display: none;
+    }
+    input{
+      display: none;
+    }
+    fieldset{
+      border: 0px;
+    }
+    .MuiSvgIcon-root{
+      color: @color-todo !important;
+      font-size: 18px;
+      margin-top: -2px;
+    }
+    .MuiButtonBase-root{
+      margin-right: 0px;
+      font-size: 15px !important;
+      padding: 0px;
+    }
+    .MuiInputAdornment-root{
+      padding-left: 0px;
+      margin-left: 0px;
+    }
+    @media(max-width: 800px){
+      right: -5px;
+    }
 }
