@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, MutableRefObject } from 'react';
 
-const useClickOutSide = (handler: ()=> void) => {
+const useClickOutSide = (handler: () => void) => {
   const domNode = useRef() as MutableRefObject<HTMLInputElement>;
   useEffect(() => {
     const maybeHandler = (event: any) => {
