@@ -41,8 +41,8 @@ const TodoSlice = createSlice({
     },
     addNewTask(state: todoState, action:any){
       const id_task = v4() + Math.floor(Math.random() * 100)
-      state.current_todo.tasks = [...state.todos[action.payload.index].tasks, {id: id_task, name: '', complete: false, file: '', file_name: '', finish_date: ''}]
-      state.todos[action.payload.index].tasks = [...state.todos[action.payload.index].tasks, {id: id_task, name: '', complete: false, file: '', file_name: '', finish_date: ''}]
+      state.current_todo.tasks = [...state.todos[action.payload.index].tasks, {id: id_task, name: '', complete: false, file: '', file_name: '', finish_date: '', description: ''}]
+      state.todos[action.payload.index].tasks = [...state.todos[action.payload.index].tasks, {id: id_task, name: '', complete: false, file: '', file_name: '', finish_date: '', description: ''}]
     },
     deleteTask(state: todoState, action:any){
       console.log(action.params);

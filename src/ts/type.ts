@@ -23,4 +23,5 @@ export type TTask = {
     file: string,
     file_name: string,
     finish_date: any,
+    description: string,
 }

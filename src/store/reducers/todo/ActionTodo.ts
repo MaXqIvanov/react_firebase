@@ -10,7 +10,8 @@ export const CreateTodo = createAsyncThunk(
     async (params: any, { getState }: any) => {
         const id = v4()
         const id_task = v4() + Math.floor(Math.random() * 100)
-        params.token = Cookies.get('token')
+        const user = Cookies.get('user')
+        params.uid = JSON.parse(user).uid
         params.id = id
         params.tasks = [{
             id: id_task,
@@ -19,6 +20,7 @@ export const CreateTodo = createAsyncThunk(
             file: '',
             file_name: '',
             finish_date: '',
+            description: '',
         }]
         const response = await setDoc(doc(db, "todos", id), params);
         return {response, params}
@@ -28,7 +30,8 @@ export const CreateTodo = createAsyncThunk(
 export const GetTodo = createAsyncThunk(
     'todo/GetTodo',
     async (params: any, { getState }: any) => {
-        const q = query(collection(db, "todos"), where("token", "==", Cookies.get('token')));
+        const user = Cookies.get('user')
+        const q = query(collection(db, "todos"), where("uid", "==", JSON.parse(user).uid));
         const querySnapshot = await getDocs(q);
         console.log(querySnapshot);
         const response: Array<Object> = []

@@ -4,6 +4,7 @@ import {AiOutlinePlus} from 'react-icons/ai'
 import {RiDeleteBin6Line} from 'react-icons/ri'
 import {AiOutlineFileAdd} from 'react-icons/ai'
 import {BsFileArrowDownFill} from 'react-icons/bs'
+import {AiOutlineQuestion} from 'react-icons/ai'
 import { useAppDispatch } from '../hooks/redux'
 import { ChangeTodo, createTask, CreateTodo, DeleteTodo, getFile, GetTodo, uploadFile } from '../store/reducers/todo/ActionTodo'
 import { useSelector } from 'react-redux'
@@ -16,19 +17,25 @@ import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import TextField from '@mui/material/TextField';
 import dayjs from 'dayjs';
+import useClickOutSide from '../hooks/useClickOutSide'
 
 const locales = ['ru'] as const;
 
 export const TodoPage = () => {
   const dispatch = useAppDispatch()
-  const {todos} = useSelector((state: RootState)=> state.todo)
+  const {todos, current_index_task} = useSelector((state: RootState)=> state.todo)
   const [createTodoInput, setCreateTodoInput] = useState('')
   const [date, setDate] = useState(dayjs(new Date()));
   const [currentDate, setCurrentDate] = useState<any>()
   const [locale, setLocale] = useState<typeof locales[number]>('ru');
+  const [isVisibleDescription, setIsVisibleDescription] = useState<boolean>(false)
   useEffect(() => {
     dispatch(GetTodo({}))
   }, [])
+
+  const text_area = useClickOutSide(()=> {
+    setIsVisibleDescription(false)
+  })
   
   const createTodo = async ()=> {
     if(createTodoInput.length === 0){
@@ -105,6 +112,7 @@ export const TodoPage = () => {
           </div>
           <div className='todo_wrapper'>
             {todo.tasks?.length > 0 && todo.tasks.map((task: TTask, index_task: number)=>
+            <>
             <div key={task.id} onClick={()=> dispatch(setCurrentTask({index_task, index}))} className='task todo__task'>
                 <input onChange={(e)=> {
                   dispatch(changeCurrentTask({complete: e.target.checked}))
@@ -114,18 +122,18 @@ export const TodoPage = () => {
                 <div className='line task__line_2'></div>
                 <div className='name task__name'>
                   <input style={{textDecoration: (task.complete || currentDate > new Date(task.finish_date).getTime()) ? 'line-through' : 'none'}} onBlur={()=> dispatch(ChangeTodo(todo))} value={task.name} onChange={(e)=> dispatch(changeCurrentTask({name: e.target.value}))}/>
-                  <div onClick={()=> {
+                  <div title="Удалить задачу" onClick={()=> {
                     dispatch(deleteTask({index_task, index}))
                     dispatch(ChangeTodo(todo))
                   }} className='task__delete'><RiDeleteBin6Line /></div>
                 </div>
                 {
                   task.file?.length > 1 ?
-                  <div onClick={()=> dispatch(getFile({task}))} className='upload_file'>
+                  <div title="Скачать файл" onClick={()=> dispatch(getFile({task}))} className='upload_file'>
                     <BsFileArrowDownFill />
                   </div>
                   :
-                  <label title='Загрузить изображение' htmlFor={`${task.id}`} className='load_file'>
+                  <label title='Прикрепить файл к задаче' htmlFor={`${task.id}`} className='load_file'>
                     <AiOutlineFileAdd />
                     <input onChange={handleCapture} type={'file'} id={`${task.id}`} style={{opacity: '0', maxHeight: '1px', maxWidth: '1px'}}/>
                   </label>
@@ -141,7 +149,11 @@ export const TodoPage = () => {
                     }}
                   />
                 </LocalizationProvider>
-              </div>)}
+                <div onClick={()=> setIsVisibleDescription(!isVisibleDescription)} title="Показать описание задачи" className='task__description'><AiOutlineQuestion /></div>
+              </div>
+            {isVisibleDescription && index_task === current_index_task && <div ref={text_area}><textarea onMouseLeave={()=> dispatch(ChangeTodo(todo))} value={task.description} onChange={(e)=> dispatch(changeCurrentTask({description: e.target.value}))} className='task__area'/></div>}
+            </>
+            )}
           </div>
           <div onClick={()=> dispatch(DeleteTodo(todo))} className='delete_btn'><RiDeleteBin6Line /></div>
       </div>)}
