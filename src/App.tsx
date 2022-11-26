@@ -10,34 +10,24 @@ import { RootState } from './store';
 import { LinearProgress } from '@mui/material';
 
 function App() {
-  const navigate = useNavigate()
-  const token = Cookies.get('token')
-  const {loading} = useSelector((state: RootState)=> state.todo)
+  const navigate = useNavigate();
+  const token = Cookies.get('token');
+  const { loading } = useSelector((state: RootState) => state.todo);
   useEffect(() => {
-    if(!token){
-      Cookies.remove('token')
-      Cookies.remove('user')
-      navigate('/auth')
+    if (!token) {
+      Cookies.remove('token');
+      Cookies.remove('user');
+      navigate('/auth');
     }
-  }, [])
-  
+  }, []);
 
   return (
     <div className="App">
-       {loading && (
-        <LinearProgress
-          className={`linear_progress`}
-        />)}
+      {loading && <LinearProgress className={`linear_progress`} />}
       {token && <Header />}
       <Routes>
-        <Route
-          path={'/'}
-          element={<TodoPage />}
-        />
-            <Route
-          path={'/auth'}
-          element={<AuthPage />}
-        />
+        <Route path={'/'} element={<TodoPage />} />
+        <Route path={'/auth'} element={<AuthPage />} />
       </Routes>
     </div>
   );
