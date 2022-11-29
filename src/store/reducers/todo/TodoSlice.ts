@@ -46,7 +46,7 @@ const TodoSlice = createSlice({
     changeCurrentTodo(state: todoState, action: { payload: Object }) {
       const params = action.payload;
       state.todos[state.current_index] = { ...state.todos[state.current_index], ...params };
-      state.current_todo = state.todos[state.current_index]
+      state.current_todo = state.todos[state.current_index];
     },
     /**
      * function for change current task and write new task, which was changed
